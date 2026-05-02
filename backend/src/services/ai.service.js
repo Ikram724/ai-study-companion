@@ -34,18 +34,13 @@ export const generateQuestions = async ({ topic, difficulty }) => {
     const apiKey = process.env.GEMINI_API_KEY?.trim();
     if (!apiKey) throw new Error("GEMINI_API_KEY is missing or empty");
     
-    console.log(`Debug: Key starts with ${apiKey.substring(0, 4)}, ends with ${apiKey.substring(apiKey.length - 4)}, length: ${apiKey.length}`);
     const genAI = new GoogleGenerativeAI(apiKey);
     
-    // Debug: List available models to see why we get 404
-    try {
-      const modelList = await genAI.listModels();
-      console.log("Available models:", modelList.models.map(m => m.name));
-    } catch (e) {
-      console.log("Could not list models:", e.message);
-    }
-
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // Force stable v1 API version
+    const model = genAI.getGenerativeModel(
+      { model: "gemini-1.5-flash" },
+      { apiVersion: "v1" }
+    );
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
