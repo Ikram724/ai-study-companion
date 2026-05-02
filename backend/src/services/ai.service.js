@@ -31,11 +31,11 @@ export const generateQuestions = async ({ topic, difficulty }) => {
   const prompt = getSystemPrompt(topic, difficulty);
 
   if (mode === "gemini") {
-    if (!process.env.GEMINI_API_KEY) throw new Error("GEMINI_API_KEY is missing");
-
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    // Use gemini-1.5-flash-latest or gemini-pro for maximum compatibility
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const apiKey = process.env.GEMINI_API_KEY?.trim();
+    if (!apiKey) throw new Error("GEMINI_API_KEY is missing or empty");
+    
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
