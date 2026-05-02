@@ -36,7 +36,16 @@ export const generateQuestions = async ({ topic, difficulty }) => {
     
     console.log(`Debug: Key starts with ${apiKey.substring(0, 4)}, ends with ${apiKey.substring(apiKey.length - 4)}, length: ${apiKey.length}`);
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    
+    // Debug: List available models to see why we get 404
+    try {
+      const modelList = await genAI.getGenerativeModel({ model: "gemini-1.5-flash" }).listModels?.();
+      if (modelList) console.log("Available models:", modelList.models.map(m => m.name));
+    } catch (e) {
+      console.log("Could not list models:", e.message);
+    }
+
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
