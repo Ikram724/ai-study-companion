@@ -9,9 +9,9 @@ Difficulty: ${difficulty}
 Format:
 {
   "questions": [
-    { "type":"mcq", "question":"text", "options":["a","b","c","d"], "answer":"correct option text" },
-    { "type":"true_false", "question":"text", "answer": true },
-    { "type":"short", "question":"text", "answer":"sample short answer" }
+    { "type":"mcq", "question":"text", "options":["a","b","c","d"], "correct_answer":"correct option text" },
+    { "type":"true_false", "question":"text", "correct_answer": true },
+    { "type":"short", "question":"text", "correct_answer":"sample short answer" }
   ]
 }
 
@@ -32,7 +32,7 @@ export const generateQuestions = async ({ topic, difficulty }) => {
 
   if (mode === "gemini") {
     if (!process.env.GEMINI_API_KEY) throw new Error("GEMINI_API_KEY is missing");
-    
+
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 

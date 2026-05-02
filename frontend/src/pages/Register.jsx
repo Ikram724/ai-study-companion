@@ -21,8 +21,8 @@ export default function Register() {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       navigate("/dashboard");
-    } catch {
-      setErr("Registration failed. This email might already be in use.");
+    } catch (err) {
+      setErr(err.response?.data?.message || "Registration failed. Please check your connection.");
     } finally {
       setLoading(false);
     }

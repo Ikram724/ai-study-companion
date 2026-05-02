@@ -26,7 +26,7 @@ export const submitAnswers = async (req, res) => {
     const userAns = answers[idx]
     if (userAns === undefined) return
 
-    const a = (q.answer ?? "").toString().trim().toLowerCase()
+    const a = (q.correct_answer ?? "").toString().trim().toLowerCase()
     const b = userAns.toString().trim().toLowerCase()
 
     if (a === b) correct++

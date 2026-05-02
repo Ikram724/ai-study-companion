@@ -18,6 +18,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [accuracy, setAccuracy] = useState(null);
+  const [err, setErr] = useState("");
 
   const loadProgress = async () => {
     try {
@@ -58,6 +59,7 @@ export default function Dashboard() {
       setAnswers({});
     } catch (err) {
       console.error("Generation failed", err);
+      setErr(err.response?.data?.message || "Generation failed. Please check your AI keys and connection.");
     } finally {
       setLoading(false);
     }
@@ -108,8 +110,8 @@ export default function Dashboard() {
         <StatCard title="Best Score" value={`${stats.best}%`} sub="Personal record" />
         <StatCard 
           title="Neural Engine" 
-          value="Ollama" 
-          sub="Local & Private" 
+          value={import.meta.env.PROD ? "Gemini 1.5" : "Ollama"} 
+          sub={import.meta.env.PROD ? "Cloud AI" : "Local & Private"} 
           icon={BrainCircuit}
         />
       </div>
@@ -129,7 +131,7 @@ export default function Dashboard() {
               </div>
               <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/[0.03] border border-white/5 text-[11px] font-bold text-white/60 uppercase tracking-widest">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                Local LLM Online
+                {import.meta.env.PROD ? "Cloud AI Online" : "Local LLM Online"}
               </div>
             </div>
 
@@ -176,6 +178,11 @@ export default function Dashboard() {
                 )}
               </button>
             </div>
+            {err && (
+              <div className="mt-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium">
+                {err}
+              </div>
+            )}
           </section>
 
           {/* Feedback Area */}
