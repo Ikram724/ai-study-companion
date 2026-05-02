@@ -36,9 +36,9 @@ export const generateQuestions = async ({ topic, difficulty }) => {
     
     const genAI = new GoogleGenerativeAI(apiKey);
     
-    // Force stable v1 API version
+    // Use absolute model path and stable v1 API
     const model = genAI.getGenerativeModel(
-      { model: "gemini-1.5-flash" },
+      { model: "models/gemini-1.5-flash" },
       { apiVersion: "v1" }
     );
 
