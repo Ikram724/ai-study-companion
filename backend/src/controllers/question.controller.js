@@ -6,7 +6,6 @@ export const generateQuestions = async (req, res) => {
   if (!topic) return res.status(400).json({ message: "Topic required" })
 
   try {
-    console.log("Starting generation in mode:", process.env.AI_MODE || "ollama");
     const data = await generateAiQuestions({ topic, difficulty: difficulty || "medium" })
     res.json(data)
   } catch (err) {
