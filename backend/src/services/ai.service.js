@@ -35,12 +35,7 @@ export const generateQuestions = async ({ topic, difficulty }) => {
     if (!apiKey) throw new Error("GEMINI_API_KEY is missing or empty");
     
     const genAI = new GoogleGenerativeAI(apiKey);
-    
-    // Use absolute model path and stable v1 API
-    const model = genAI.getGenerativeModel(
-      { model: "models/gemini-1.5-flash" },
-      { apiVersion: "v1" }
-    );
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
