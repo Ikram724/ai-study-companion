@@ -34,7 +34,7 @@ export const generateQuestions = async ({ topic, difficulty }) => {
     const apiKey = process.env.GEMINI_API_KEY?.trim();
     if (!apiKey) throw new Error("GEMINI_API_KEY is missing or empty");
     
-    console.log("Using API Key starting with:", apiKey.substring(0, 4));
+    console.log(`Debug: Key starts with ${apiKey.substring(0, 4)}, ends with ${apiKey.substring(apiKey.length - 4)}, length: ${apiKey.length}`);
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
