@@ -39,8 +39,8 @@ export const generateQuestions = async ({ topic, difficulty }) => {
     
     // Debug: List available models to see why we get 404
     try {
-      const modelList = await genAI.getGenerativeModel({ model: "gemini-1.5-flash" }).listModels?.();
-      if (modelList) console.log("Available models:", modelList.models.map(m => m.name));
+      const modelList = await genAI.listModels();
+      console.log("Available models:", modelList.models.map(m => m.name));
     } catch (e) {
       console.log("Could not list models:", e.message);
     }
